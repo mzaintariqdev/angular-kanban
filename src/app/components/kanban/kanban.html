@@ -1,0 +1,55 @@
+<div class="board">
+  <div
+    class="column"
+    cdkDropList
+    id="todo"
+    #todoList="cdkDropList"
+    [cdkDropListData]="todo"
+    [cdkDropListConnectedTo]="[progressList, doneList]"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <h2>To Do</h2>
+
+    @for (task of todo; track task.id) {
+      <div class="card" cdkDrag>
+        {{ task.title }}
+      </div>
+    }
+  </div>
+
+  <div
+    class="column"
+    cdkDropList
+    id="inProgress"
+    #progressList="cdkDropList"
+    [cdkDropListData]="inProgress"
+    [cdkDropListConnectedTo]="[todoList, doneList]"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <h2>In Progress</h2>
+
+    @for (task of inProgress; track task.id) {
+      <div class="card" cdkDrag>
+        {{ task.title }}
+      </div>
+    }
+  </div>
+
+  <div
+    class="column"
+    cdkDropList
+    id="done"
+    #doneList="cdkDropList"
+    [cdkDropListData]="done"
+    [cdkDropListConnectedTo]="[todoList, progressList]"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <h2>Done</h2>
+
+    @for (task of done; track task.id) {
+      <div class="card" cdkDrag>
+        {{ task.title }}
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,34 @@
+.board {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.column {
+  width: 320px;
+  min-height: 400px;
+  background: #f4f5f7;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.column h2 {
+  margin-bottom: 16px;
+}
+
+.card {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: move;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cdk-drag-preview {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
