@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>
+  {{ data ? 'Edit Task' : 'Add Task' }}
+</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Title</mat-label>
+
+    <input matInput [(ngModel)]="task.title" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+
+    <textarea matInput rows="4" [(ngModel)]="task.description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Priority</mat-label>
+
+    <select matNativeControl [(ngModel)]="task.priority">
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="!task.title.trim()">
+    Save
+  </button>
+</mat-dialog-actions>

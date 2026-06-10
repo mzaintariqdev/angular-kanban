@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header">
+    <h4>{{ task.title }}</h4>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
+
+  <p class="desc">
+    {{ task.description }}
+  </p>
+
+  <span class="badge" [class]="task.priority">
+    {{ task.priority }}
+  </span>
+</div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="edit.emit()">Edit</button>
+  <button mat-menu-item (click)="delete.emit()">Delete</button>
+</mat-menu>

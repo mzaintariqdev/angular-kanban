@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>
+  {{ data?.name ? 'Rename Column' : 'Add Column' }}
+</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Column Name</mat-label>
+
+    <input matInput [(ngModel)]="name" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="!name.trim()">Save</button>
+</mat-dialog-actions>
