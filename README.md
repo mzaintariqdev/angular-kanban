@@ -1,59 +1,75 @@
-# SmartTaskManager
+# 📌 Kanban Task Manager
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+A modern **Kanban-style task management application** inspired by tools like Trello and Notion.  
+It allows users to create boards, organize tasks into columns, and manage work with a smooth drag-and-drop interface.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Overview
 
-```bash
-ng serve
-```
+This application allows users to:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Create and manage multiple **boards** (projects/workspaces)
+- Organize tasks inside **Kanban columns**
+- Add, edit, and delete tasks
+- Drag & drop tasks between columns
+- Manage board structure dynamically
+- Search and paginate boards
+- Persist data across browser sessions
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🧠 Tech Stack
 
-```bash
-ng generate component component-name
-```
+### 🎨 Frontend
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Angular – Standalone component architecture
+- Angular Signals – Reactive state management
+- Angular Material – UI components (dialogs, buttons, icons)
+- Angular CDK – Drag & Drop functionality
+- TypeScript – Strongly typed logic
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## ⚙️ State Management
 
-To build the project run:
+- Custom service-based architecture (`BoardService`, `KanbanService`)
+- Angular Signals (`signal`, `computed`)
+- LocalStorage for data persistence
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 💾 Data Storage
 
-## Running unit tests
+The application currently uses **browser LocalStorage** to store:
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- Boards
+- Columns
+- Tasks
 
-```bash
-ng test
-```
+This ensures data remains available even after page refresh.
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 🎯 Features
 
-```bash
-ng e2e
-```
+- 📋 Multiple Kanban boards
+- 🧩 Dynamic column management
+- ✅ Full CRUD for tasks
+- 🔀 Drag & drop task movement
+- 🔍 Search boards
+- 📄 Pagination
+- 💾 Persistent local storage
+- 📱 Responsive UI
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 📌 Project Goal
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+A clean and interactive **Kanban task management system** built using Angular, demonstrating modern frontend architecture, reusable components, and reactive state management.
+
+---
+
+## 🚀 Status
+
+- Frontend application fully functional
