@@ -1,0 +1,49 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon color="primary">
+    {{ data ? 'edit_note' : 'add_task' }}
+  </mat-icon>
+
+  <span>{{ data ? 'Edit Task' : 'Create New Task' }}</span>
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Task Title</mat-label>
+    <input matInput [(ngModel)]="task.title" placeholder="Enter task title" />
+    <mat-icon matSuffix>title</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      rows="4"
+      [(ngModel)]="task.description"
+      placeholder="Add task details..."
+    ></textarea>
+    <mat-icon matSuffix>description</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Priority</mat-label>
+    <mat-select [(ngModel)]="task.priority">
+      <mat-option value="low"> 🟢 Low </mat-option>
+
+      <mat-option value="medium"> 🟡 Medium </mat-option>
+
+      <mat-option value="high"> 🔴 High </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+    Cancel
+  </button>
+
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="!task.title?.trim()">
+    <mat-icon>save</mat-icon>
+    {{ data ? 'Update Task' : 'Save Task' }}
+  </button>
+</mat-dialog-actions>

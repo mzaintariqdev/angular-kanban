@@ -1,0 +1,35 @@
+<div class="column">
+  <!-- HEADER (with menu restored) -->
+  <div class="column-header">
+    <h2>{{ column.name }}</h2>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="renameColumn()">Rename</button>
+
+      <button mat-menu-item (click)="deleteColumn()">Delete</button>
+    </mat-menu>
+  </div>
+
+  <!-- DROP ZONE (IMPORTANT: must stay here) -->
+  <div
+    class="task-wrapper"
+    cdkDropList
+    [id]="column.id"
+    [cdkDropListData]="column.tasks"
+    [cdkDropListConnectedTo]="connectedLists"
+    (cdkDropListDropped)="dropped($event)"
+  >
+    @for (task of column.tasks; track task.id) {
+      <div cdkDrag>
+        <app-kanban-task [task]="task" (edit)="editTask(task)" (delete)="deleteTask(task.id)" />
+      </div>
+    }
+  </div>
+
+  <!-- ADD TASK -->
+  <button class="add-task" (click)="addTask()">+ Add Task</button>
+</div>

@@ -1,54 +1,34 @@
-<div class="board">
-  <div
-    class="column"
-    cdkDropList
-    id="todo"
-    #todoList="cdkDropList"
-    [cdkDropListData]="todo"
-    [cdkDropListConnectedTo]="[progressList, doneList]"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <h2>To Do</h2>
+<div class="kanban-page">
+  <!-- HEADER -->
+  <div class="kanban-header">
+    <button mat-icon-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
 
-    @for (task of todo; track task.id) {
-      <div class="card" cdkDrag>
-        {{ task.title }}
-      </div>
-    }
+    <div class="board-info">
+      <div class="title">Board View</div>
+      <div class="subtitle">Drag & organize your tasks</div>
+    </div>
+
+    <div class="spacer"></div>
   </div>
 
-  <div
-    class="column"
-    cdkDropList
-    id="inProgress"
-    #progressList="cdkDropList"
-    [cdkDropListData]="inProgress"
-    [cdkDropListConnectedTo]="[todoList, doneList]"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <h2>In Progress</h2>
-
-    @for (task of inProgress; track task.id) {
-      <div class="card" cdkDrag>
-        {{ task.title }}
-      </div>
+  <!-- BOARD -->
+  <div class="board">
+    @for (column of columns(); track column.id) {
+      <app-kanban-column
+        class="column-wrapper"
+        [boardId]="boardId"
+        [column]="column"
+        [connectedLists]="connectedLists"
+        [dropped]="drop.bind(this)"
+      />
     }
-  </div>
 
-  <div
-    class="column"
-    cdkDropList
-    id="done"
-    #doneList="cdkDropList"
-    [cdkDropListData]="done"
-    [cdkDropListConnectedTo]="[todoList, progressList]"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <h2>Done</h2>
-
-    @for (task of done; track task.id) {
-      <div class="card" cdkDrag>
-        {{ task.title }}
+    @if (columns().length < 5) {
+      <div class="add-column-card" (click)="openAddColumnDialog()">
+        <mat-icon>add</mat-icon>
+        <span>Add Column</span>
       </div>
     }
   </div>
