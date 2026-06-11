@@ -3,6 +3,8 @@
 A modern **Kanban-style task management application** inspired by tools like Trello and Notion.  
 It allows users to create boards, organize tasks into columns, and manage work with a smooth drag-and-drop interface.
 
+Can be accessed from here https://smart-task-kanban.netlify.app/
+
 ---
 
 ## 🚀 Overview
