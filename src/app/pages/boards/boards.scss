@@ -1,0 +1,191 @@
+.page {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.header p {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* ================= CREATE BUTTON ================= */
+
+.create-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.create-btn:hover {
+  background: #125aa0;
+  transform: translateY(-2px);
+}
+
+/* ================= SEARCH ================= */
+
+.toolbar {
+  margin-bottom: 20px;
+}
+
+.toolbar input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: 0.2s ease;
+  font-size: 14px;
+}
+
+.toolbar input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15);
+}
+
+/* ================= GRID ================= */
+
+.boards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+/* ================= CARD ================= */
+
+.board-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+}
+
+.board-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.board-body {
+  cursor: pointer;
+}
+
+.board-card h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.board-card p {
+  margin-top: 6px;
+  color: #777;
+  font-size: 13px;
+}
+
+/* ================= FOOTER ================= */
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+/* ================= DELETE ================= */
+
+.delete-btn {
+  background: #ff5252;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #e53935;
+}
+
+/* ================= PAGINATION ================= */
+
+.pagination {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.page-btn:hover {
+  background: #f5f5f5;
+}
+
+.page-info {
+  font-size: 14px;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .create-btn {
+    width: 100%;
+  }
+
+  .boards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .boards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+}

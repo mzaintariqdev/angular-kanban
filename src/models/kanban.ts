@@ -16,3 +16,18 @@ export interface Board {
   name: string;
   columns: Column[];
 }
+
+export interface Board {
+  id: string;
+  name: string;
+  description: string;
+  columns: Column[];
+
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateBoardModel {
+  name: string;
+  description: string;
+}

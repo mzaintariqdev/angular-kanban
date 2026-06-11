@@ -1,0 +1,22 @@
+.dialog-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 320px;
+  padding-top: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.dialog-actions {
+  padding: 16px 24px 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}

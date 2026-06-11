@@ -6,63 +6,59 @@ import { Column, Task } from '../../models/kanban';
   providedIn: 'root',
 })
 export class KanbanService {
-  readonly MAX_COLUMNS = 5;
+  private readonly STORAGE_KEY = 'kanban-board-data';
 
-  private readonly STORAGE_KEY = 'smart-task-manager-columns';
+  // boardId -> columns[]
+  private readonly _boards = signal<Record<string, Column[]>>(this.loadAll());
 
-  private readonly _columns = signal<Column[]>(this.loadColumns());
+  readonly boards = computed(() => this._boards());
 
-  readonly columns = computed(() => this._columns());
-
-  private loadColumns(): Column[] {
+  private loadAll(): Record<string, Column[]> {
     const saved = localStorage.getItem(this.STORAGE_KEY);
-
-    if (saved) {
-      return JSON.parse(saved);
-    }
-
-    return [
-      {
-        id: 'todo',
-        name: 'To Do',
-        tasks: [
-          {
-            id: '1',
-            title: 'Create Login Page',
-            description: 'Build login UI',
-            priority: 'medium',
-          },
-        ],
-      },
-      {
-        id: 'progress',
-        name: 'In Progress',
-        tasks: [],
-      },
-      {
-        id: 'done',
-        name: 'Done',
-        tasks: [],
-      },
-    ];
+    return saved ? JSON.parse(saved) : {};
   }
 
-  private saveColumns(columns: Column[]): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(columns));
+  private saveAll(data: Record<string, Column[]>) {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
   }
 
-  updateColumns(columns: Column[]): void {
-    this._columns.set(columns);
-    this.saveColumns(columns);
+  getColumns(boardId: string): Column[] {
+    return this._boards()[boardId] ?? [];
   }
 
-  addColumn(name: string): void {
-    if (this._columns().length >= this.MAX_COLUMNS) {
-      return;
-    }
+  initBoard(boardId: string): void {
+    const state = this._boards();
+
+    if (state[boardId]) return;
+
+    const updated = {
+      ...state,
+      [boardId]: [
+        { id: 'todo', name: 'To Do', tasks: [] },
+        { id: 'progress', name: 'In Progress', tasks: [] },
+        { id: 'done', name: 'Done', tasks: [] },
+      ],
+    };
+
+    this._boards.set(updated);
+    this.saveAll(updated);
+  }
+
+  setColumns(boardId: string, columns: Column[]): void {
+    const updated = {
+      ...this._boards(),
+      [boardId]: columns,
+    };
+
+    this._boards.set(updated);
+    this.saveAll(updated);
+  }
+
+  addColumn(boardId: string, name: string): void {
+    const columns = this.getColumns(boardId);
 
     const updated = [
-      ...this._columns(),
+      ...columns,
       {
         id: uuid(),
         name,
@@ -70,42 +66,37 @@ export class KanbanService {
       },
     ];
 
-    this.updateColumns(updated);
+    this.setColumns(boardId, updated);
   }
 
-  renameColumn(columnId: string, name: string): void {
-    const updated = this._columns().map((column) =>
-      column.id === columnId
-        ? {
-            ...column,
-            name,
-          }
-        : column,
-    );
+  renameColumn(boardId: string, columnId: string, name: string): void {
+    const columns = this.getColumns(boardId);
 
-    this.updateColumns(updated);
+    const updated = columns.map((col) => (col.id === columnId ? { ...col, name } : col));
+
+    this.setColumns(boardId, updated);
   }
 
-  deleteColumn(columnId: string): void {
-    if (this._columns().length <= 1) {
-      return;
-    }
+  deleteColumn(boardId: string, columnId: string): void {
+    const columns = this.getColumns(boardId);
 
-    const updated = this._columns().filter((column) => column.id !== columnId);
+    if (columns.length <= 1) return;
 
-    this.updateColumns(updated);
+    const updated = columns.filter((col) => col.id !== columnId);
+
+    this.setColumns(boardId, updated);
   }
 
-  addTask(columnId: string, task: Omit<Task, 'id'>): void {
-    const updated = this._columns().map((column) => {
-      if (column.id !== columnId) {
-        return column;
-      }
+  addTask(boardId: string, columnId: string, task: Omit<Task, 'id'>): void {
+    const columns = this.getColumns(boardId);
+
+    const updated = columns.map((col) => {
+      if (col.id !== columnId) return col;
 
       return {
-        ...column,
+        ...col,
         tasks: [
-          ...column.tasks,
+          ...col.tasks,
           {
             id: uuid(),
             ...task,
@@ -114,43 +105,36 @@ export class KanbanService {
       };
     });
 
-    this.updateColumns(updated);
+    this.setColumns(boardId, updated);
   }
 
-  updateTask(columnId: string, taskId: string, taskData: Partial<Task>): void {
-    const updated = this._columns().map((column) => {
-      if (column.id !== columnId) {
-        return column;
-      }
+  updateTask(boardId: string, columnId: string, taskId: string, taskData: Partial<Task>): void {
+    const columns = this.getColumns(boardId);
+
+    const updated = columns.map((col) => {
+      if (col.id !== columnId) return col;
 
       return {
-        ...column,
-        tasks: column.tasks.map((task) =>
-          task.id === taskId
-            ? {
-                ...task,
-                ...taskData,
-              }
-            : task,
-        ),
+        ...col,
+        tasks: col.tasks.map((task) => (task.id === taskId ? { ...task, ...taskData } : task)),
       };
     });
 
-    this.updateColumns(updated);
+    this.setColumns(boardId, updated);
   }
 
-  deleteTask(columnId: string, taskId: string): void {
-    const updated = this._columns().map((column) => {
-      if (column.id !== columnId) {
-        return column;
-      }
+  deleteTask(boardId: string, columnId: string, taskId: string): void {
+    const columns = this.getColumns(boardId);
+
+    const updated = columns.map((col) => {
+      if (col.id !== columnId) return col;
 
       return {
-        ...column,
-        tasks: column.tasks.filter((task) => task.id !== taskId),
+        ...col,
+        tasks: col.tasks.filter((task) => task.id !== taskId),
       };
     });
 
-    this.updateColumns(updated);
+    this.setColumns(boardId, updated);
   }
 }

@@ -1,0 +1,42 @@
+<div class="page">
+  <div class="header">
+    <div>
+      <h1>Your Boards</h1>
+      <p>Manage and organize your workspaces</p>
+    </div>
+
+    <button class="create-btn" (click)="createBoard()">+ New Board</button>
+  </div>
+
+  <div class="toolbar">
+    <input
+      type="text"
+      placeholder="Search boards..."
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+  </div>
+
+  <div class="boards-grid">
+    @for (board of pagedBoards(); track board.id) {
+      <div class="board-card">
+        <div class="board-body" (click)="openBoard(board.id)">
+          <h3>{{ board.name }}</h3>
+          <p>{{ board.description }}</p>
+        </div>
+
+        <div class="card-footer">
+          <button class="delete-btn" (click)="deleteBoard(board.id)">Delete</button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="pagination">
+    <button class="page-btn" (click)="previousPage()">Previous</button>
+
+    <span class="page-info"> Page {{ page() }} / {{ totalPages() || 1 }} </span>
+
+    <button class="page-btn" (click)="nextPage()">Next</button>
+  </div>
+</div>

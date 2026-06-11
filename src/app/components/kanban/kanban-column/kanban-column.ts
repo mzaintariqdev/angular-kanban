@@ -1,5 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +23,10 @@ import { ColumnDialogComponent } from '../../../shared/column-dialog/column-dial
 export class KanbanColumn {
   @Input({ required: true }) column!: Column;
   @Input({ required: true }) connectedLists!: string[];
+
+  // ✅ IMPORTANT: boardId is required now
+  @Input({ required: true }) boardId!: string;
+
   @Input() dropped!: (event: any) => void;
 
   private readonly dialog = inject(MatDialog);
@@ -38,7 +43,8 @@ export class KanbanColumn {
 
     ref.afterClosed().subscribe((task) => {
       if (!task) return;
-      this.kanbanService.addTask(this.column.id, task);
+
+      this.kanbanService.addTask(this.boardId, this.column.id, task);
     });
   }
 
@@ -50,12 +56,13 @@ export class KanbanColumn {
 
     ref.afterClosed().subscribe((updated) => {
       if (!updated) return;
-      this.kanbanService.updateTask(this.column.id, task.id, updated);
+
+      this.kanbanService.updateTask(this.boardId, this.column.id, task.id, updated);
     });
   }
 
   deleteTask(taskId: string): void {
-    this.kanbanService.deleteTask(this.column.id, taskId);
+    this.kanbanService.deleteTask(this.boardId, this.column.id, taskId);
   }
 
   // =========================
@@ -70,11 +77,12 @@ export class KanbanColumn {
 
     ref.afterClosed().subscribe((name) => {
       if (!name) return;
-      this.kanbanService.renameColumn(this.column.id, name);
+
+      this.kanbanService.renameColumn(this.boardId, this.column.id, name);
     });
   }
 
   deleteColumn(): void {
-    this.kanbanService.deleteColumn(this.column.id);
+    this.kanbanService.deleteColumn(this.boardId, this.column.id);
   }
 }

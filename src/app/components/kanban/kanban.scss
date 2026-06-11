@@ -1,33 +1,110 @@
-.board {
+.kanban-page {
+  height: 100vh;
   display: flex;
-  gap: 16px;
-  padding: 16px;
-
-  overflow-x: auto;
-  align-items: flex-start;
+  flex-direction: column;
+  background: #f6f7fb;
 }
 
-.add-column-card {
-  width: 320px;
-  min-height: 120px;
+/* ================= HEADER ================= */
 
-  flex-shrink: 0;
+.kanban-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+.back-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: scale(1.05);
+}
+
+.board-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: #777;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* ================= BOARD ================= */
+
+.board {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+  overflow-x: auto;
+  align-items: flex-start;
+
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar (clean UI) */
+.board::-webkit-scrollbar {
+  height: 8px;
+}
+
+.board::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* ================= COLUMN WRAPPER ================= */
+
+.column-wrapper {
+  min-width: 280px;
+}
+
+/* ================= ADD COLUMN ================= */
+
+.add-column-card {
+  min-width: 260px;
+  height: fit-content;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
 
-  border: 2px dashed #cbd5e1;
-  border-radius: 12px;
+  padding: 16px;
+  border-radius: 14px;
 
-  background: white;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px dashed rgba(0, 0, 0, 0.15);
 
   cursor: pointer;
+  transition: 0.2s ease;
 
-  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #555;
 }
 
 .add-column-card:hover {
-  border-color: #3b82f6;
-  background: #f8fafc;
+  background: white;
+  border-color: #1976d2;
+  color: #1976d2;
+  transform: translateY(-3px);
 }
